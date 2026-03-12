@@ -18,9 +18,10 @@ CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 FLUSH PRIVILEGES;
 EOF
 
-    /usr/bin/mysqld --user=mysql --bootstrap < $tfile
+    /usr/bin/mariadbd --user=mysql --bootstrap < $tfile
     rm -f $tfile
 fi
 
-echo "MySQL başladılır..."
-exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --address=0.0.0.0
+echo "MySQL (MariaDB) başladılır..."
+# Səhv olan '--address' hissəsini '--bind-address' ilə dəyişdik
+exec /usr/bin/mariadbd --user=mysql --console --skip-name-resolve --bind-address=0.0.0.0
